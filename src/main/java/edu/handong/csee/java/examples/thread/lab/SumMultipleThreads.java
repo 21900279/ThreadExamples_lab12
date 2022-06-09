@@ -27,16 +27,20 @@ public class SumMultipleThreads {
 			
 			Thread thread = new Thread(currentRunner);
 			thread.start();
+			
 			threadsForSubSum.add(thread);
 			System.out.println("Thread-" + i + " started!");
 		}
-
+		try {
+			for(int i=0; i<to/1000000; i++) {
+				threadsForSubSum.get(i).join();
+			}
+		} catch (Exception e){
+		}
 		long grandTotal = 0;
 		for(SumRunner runner:sumRunners) {
 			grandTotal += runner.totalSum;
 		}
-
 		System.out.println("Grand Total = " + grandTotal);
 	}
-
 }
